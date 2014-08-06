@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="Random.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Random"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="DarkBlue">
+
+    <Grid>
+        <Pivot>
+            <PivotItem Header="random">
+                
+                <StackPanel>
+                    <TextBlock 
+                        FontSize="180"
+                        HorizontalAlignment="Center"
+                        Name="DisplayedValue"
+                        >23</TextBlock>
+                    <Button 
+                        FontSize="30"
+                        Height="100"
+                        Width="200"
+                        HorizontalAlignment="Center"
+                        Margin="0,100"                                            
+                        >Random!</Button>
+                </StackPanel>
+            </PivotItem>
+            <PivotItem Header="configuración">
+                <StackPanel>
+                    <RadioButton 
+                        Name="RadioNumber" 
+                        >Números</RadioButton>
+                    <RadioButton 
+                        Name="RadioLetter"
+                        >Letras</RadioButton>
+                    
+                    <TextBlock>Valor mínimo:</TextBlock>
+                    <TextBox 
+                        Name="TextMinimum" 
+                        Text="1"
+                    />
+                    
+                    <TextBlock>Valor máximo</TextBlock>
+                    <TextBox Name="TextMaximum" 
+                             Text="10" 
+                    />
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>
