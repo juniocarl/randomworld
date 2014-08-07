@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Random.MainPage"
+    x:Class="RandomWorld.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Random"
@@ -9,7 +9,7 @@
     Background="DarkBlue">
 
     <Grid>
-        <Pivot>
+        <Pivot Margin="1,0,-1,0">
             <PivotItem Header="random">
                 
                 <StackPanel>
@@ -23,7 +23,8 @@
                         Height="100"
                         Width="200"
                         HorizontalAlignment="Center"
-                        Margin="0,100"                                            
+                        Margin="0,100"   
+                        Click="Button_Click"
                         >Random!</Button>
                 </StackPanel>
             </PivotItem>
@@ -31,20 +32,26 @@
                 <StackPanel>
                     <RadioButton 
                         Name="RadioNumber" 
+                        Checked="RadioNumber_Checked"
                         >Números</RadioButton>
                     <RadioButton 
                         Name="RadioLetter"
+                        Checked="RadioLetter_Checked"
                         >Letras</RadioButton>
                     
                     <TextBlock>Valor mínimo:</TextBlock>
                     <TextBox 
                         Name="TextMinimum" 
                         Text="1"
+                        GotFocus="Text_GotFocus"
+                        LostFocus="Text_LostFocus"
                     />
                     
                     <TextBlock>Valor máximo</TextBlock>
                     <TextBox Name="TextMaximum" 
                              Text="10" 
+                             GotFocus="Text_GotFocus"
+                             LostFocus="Text_LostFocus"
                     />
                 </StackPanel>
             </PivotItem>
