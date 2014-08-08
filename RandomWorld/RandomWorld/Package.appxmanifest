@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="be8d1293-1c37-42d9-8e64-cd41d56c2d90" Publisher="CN=JuanCarlos" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="be8d1293-1c37-42d9-8e64-cd41d56c2d90" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="13476Juniocarl.RandomWorld" Publisher="CN=DDBF2141-4455-4381-AB18-B3BA08C4D55C" Version="1.1.0.0" />
+  <mp:PhoneIdentity PhoneProductId="8268743f-b9f1-4262-acbe-b66d23050894" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>RandomWorld</DisplayName>
-    <PublisherDisplayName>JuanCarlos</PublisherDisplayName>
+    <DisplayName>Random World!</DisplayName>
+    <PublisherDisplayName>Juniocarl</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
