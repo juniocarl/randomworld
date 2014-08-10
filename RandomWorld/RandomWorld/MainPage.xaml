@@ -10,14 +10,13 @@
 
     <Grid>
         <Pivot Margin="1,0,-1,0">
-            <PivotItem Header="random">
-                
+            <PivotItem Header="random">                
                 <StackPanel>
                     <TextBlock 
-                        FontSize="180"
+                        FontSize="170"
                         HorizontalAlignment="Center"
                         Name="DisplayedValue"
-                        >23</TextBlock>
+                        >21</TextBlock>
                     <Button 
                         FontSize="30"
                         Height="100"
@@ -54,6 +53,28 @@
                              LostFocus="Text_LostFocus"
                     />
                 </StackPanel>
+            </PivotItem>
+            <PivotItem Header="volado">
+                <StackPanel>
+                    <Image 
+                        Name="ImageMoneda" 
+                        Width="300px"
+                        Source="ms-appx:/Images/sol.png"/>
+                    <Button 
+                        Click="Button_Lanzar_Volado_Click"
+                        HorizontalAlignment="Center"
+                        Margin="30,30,30,30"
+                     >¡Lanzar!</Button>
+                </StackPanel>
+            </PivotItem>
+            <PivotItem Header="acerca de">
+                <TextBlock>
+                    Random World! <LineBreak/>
+                    Versión 1.1 <LineBreak />
+                    Por Juan Carlos Pérez <LineBreak/>
+                    Código fuente disponible en <LineBreak />
+                    https://github.com/juniocarl/randomworld
+                </TextBlock>
             </PivotItem>
         </Pivot>
     </Grid>

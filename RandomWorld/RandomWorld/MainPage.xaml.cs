@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
+using Windows.UI.Xaml.Media.Imaging;
+using System.Threading.Tasks;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -135,6 +137,29 @@ namespace RandomWorld
             }
 
             DisplayedValue.Text = result;
+        }
+
+        private async void Button_Lanzar_Volado_Click(object sender, RoutedEventArgs e)
+        {
+            (sender as Button).IsEnabled = false;
+
+            System.Random random = new System.Random();
+            var iteraciones = random.Next(20, 26);
+            string[] nombres = { @"ms-appx:/Images/sol.png", @"ms-appx:/Images/aguila.png" };
+            var sol = new BitmapImage(
+                    new Uri(nombres[0], UriKind.Absolute)
+                );
+            var aguila = new BitmapImage(
+                    new Uri(nombres[1], UriKind.Absolute)
+                );
+
+            for (int i = 0; i < iteraciones; i++)
+            {
+                ImageMoneda.Source = i % 2 == 0 ? aguila : sol;
+                await Task.Delay(TimeSpan.FromSeconds(i/25.0));
+            }
+
+            (sender as Button).IsEnabled = true;
         }
     }
 }

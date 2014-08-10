@@ -4,6 +4,7 @@
     <AppxShowAllApps>False</AppxShowAllApps>
     <AppxPackageIsForStore>True</AppxPackageIsForStore>
     <AppxBuildConfigurationSelection>neutral</AppxBuildConfigurationSelection>
+    <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DeviceId>D363CCA4-0764-4F2C-9EE1-12E55E13C0FC</DeviceId>
