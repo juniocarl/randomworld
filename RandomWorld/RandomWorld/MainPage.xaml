@@ -124,77 +124,105 @@
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="password">
-                <StackPanel>
-                    <CheckBox
-                        Name="CheckUpper"
-                        FontSize="24"
-                        >mayúsculas</CheckBox>
-                    <CheckBox
-                        Name="CheckLower"
-                        FontSize="24"
-                        >minúsculas</CheckBox>
-                    <CheckBox
-                        Name="CheckNumber"
-                        FontSize="24"
-                        >números</CheckBox>
-                    <CheckBox
-                        Name="CheckSpecial"
-                        FontSize="24"
-                        >caracteres especiales</CheckBox>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock 
-                            VerticalAlignment="Center"
-                            Margin="10,0,10,0"
-                            Width="80"
+                <ScrollViewer>
+                    <StackPanel>
+                        <CheckBox
+                            Name="CheckUpper"
                             FontSize="24"
-                         >tamaño:</TextBlock>
-                        <Slider
-                            Name="PasswordLengthSlider"
-                            Width="200"
-                            Minimum="3"
-                            Maximum="10"
-                            StepFrequency="1"
-                            Height="40"
+                            >mayúsculas</CheckBox>
+                        <CheckBox
+                            Name="CheckLower"
+                            FontSize="24"
+                            >minúsculas</CheckBox>
+                        <CheckBox
+                            Name="CheckNumber"
+                            FontSize="24"
+                            >números</CheckBox>
+                        <CheckBox
+                            Name="CheckSpecial"
+                            FontSize="24"
+                            >caracteres especiales</CheckBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock 
+                                VerticalAlignment="Center"
+                                Margin="10,0,10,0"
+                                Width="80"
+                                FontSize="24"
+                             >tamaño:</TextBlock>
+                            <Slider
+                                Name="PasswordLengthSlider"
+                                Width="200"
+                                Minimum="3"
+                                Maximum="10"
+                                StepFrequency="1"
+                                Height="40"
+                                />
+                            <TextBlock
+                                Name="PasswordLength"
+                                VerticalAlignment="Center"
+                                Margin="30,0"                            
+                                FontSize="24"
+                                >3</TextBlock>
+                        </StackPanel>
+                        <TextBox
+                            Name="PasswordGenerated"
+                            IsEnabled="False"
+                            FontSize="40"
+                            Height="70"
                             />
+                        <StackPanel 
+                            Margin="30,30,30,30"
+                            Orientation="Horizontal">
+                            <Button 
+                                Click="PasswordButton_Click"
+                                HorizontalAlignment="Center"
+                                Margin="20"
+                             >generar</Button>
+                            <Button
+                                Click="SavePassword_Click"
+                                >
+                                recordar                            
+                            </Button>
+                        </StackPanel>
                         <TextBlock
-                            Name="PasswordLength"
-                            VerticalAlignment="Center"
-                            Margin="30,0"                            
+                            FontSize="30"
+                            >Password almacenado:</TextBlock>
+                        <TextBlock
+                            Name="SavedPassword"
                             FontSize="24"
-                            >3</TextBlock>
+                            ></TextBlock>
                     </StackPanel>
-                    <TextBox
-                        Name="PasswordGenerated"
-                        IsEnabled="False"
-                        FontSize="40"
-                        Height="50"
-                        />
-                    <StackPanel 
-                        Margin="30,30,30,30"
-                        Orientation="Horizontal">
-                    <Button 
-                        Click="PasswordButton_Click"
-                        HorizontalAlignment="Center"
-                        Margin="20"
-                     >generar</Button>
-                        <Button
-                            Click="CopyPasswordToClipboard_Click"
-                            >
-                            copiar                            
-                        </Button>
-                    </StackPanel>
-                </StackPanel>                
+                </ScrollViewer>
             </PivotItem>
             <PivotItem Header="acerca de">
-                <TextBlock
-                    FontSize="24"
-                    >
-                    Random World! <LineBreak/>
-                    Versión 1.2 <LineBreak />
-                    Por Juan Carlos Pérez <LineBreak/>
-                    Código fuente disponible en <LineBreak />
-                    https://github.com/juniocarl/randomworld
-                </TextBlock>
+                <StackPanel>
+                    <Image
+                        Height="200px"
+                        Source="Assets/StoreLogo.scale-240.png"
+                        />
+                    <TextBlock
+                        FontSize="30"
+                        TextAlignment="Center"
+                        >Random World!</TextBlock>
+                    <TextBlock
+                        FontSize="20"
+                        TextAlignment="Center"
+                        >V. 1.2</TextBlock>
+                    <TextBlock
+                        FontSize="20"
+                        TextAlignment="Center"
+                        >Por Juan Carlos Pérez</TextBlock>
+                    <TextBlock
+                        FontSize="20"
+                        TextAlignment="Center"
+                        >@juniocarl</TextBlock>
+                    <TextBlock                        
+                        FontSize="18"
+                        Margin="0,20"
+                        >
+                        Código fuente disponible en<LineBreak />https://github.com/juniocarl/randomworld 
+                    </TextBlock>
+                </StackPanel>
             </PivotItem>
         </Pivot>
     </Grid>

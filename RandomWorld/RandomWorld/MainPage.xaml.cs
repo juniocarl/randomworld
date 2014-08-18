@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Media.Imaging;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -31,6 +33,7 @@ namespace RandomWorld
             this.NavigationCacheMode = NavigationCacheMode.Required;
             PasswordLengthSlider.ValueChanged += PasswordLengthSlider_ValueChanged;
             InicializarMoneda();
+            ReadFile();
         }
 
         /// <summary>
@@ -63,6 +66,39 @@ namespace RandomWorld
         {
             MessageDialog ms = new MessageDialog(str);
             ms.ShowAsync();
+        }
+
+        async void CreateFile(string password)
+        {
+            try
+            {
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                StorageFile file = await localFolder.CreateFileAsync("password.dat", CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(file, password);
+                ReadFile();
+            }
+            catch(Exception ex)
+            {
+                ShowMessage(ex.Message);
+            }
+
+        }
+
+        async void ReadFile()
+        {
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            try
+            {
+                var file = await localFolder.GetFileAsync("password.dat");
+                SavedPassword.Text = await FileIO.ReadTextAsync(file);                
+            }
+            catch(FileNotFoundException)
+            {
+
+            }
+            catch (Exception ex){
+                ShowMessage(ex.Message);
+            }
         }
 
         #endregion 
@@ -232,13 +268,27 @@ namespace RandomWorld
             }
         }
 
-        #endregion
-
-        private void CopyPasswordToClipboard_Click(object sender, RoutedEventArgs e)
+        private async void SavePassword_Click(object sender, RoutedEventArgs e)
         {
-            Windows.ApplicationModel.DataTransfer.Clipboard.SetContent("hello");
+            if (PasswordGenerated.Text.Length > 0)
+            {
+                bool? result = null;
+                MessageDialog m = new MessageDialog("El password anterior se sobreescribirá. ¿Desea continuar?");                
+                m.Commands.Add(new UICommand("Si", new UICommandInvokedHandler((cmd) => result = true)));
+                m.Commands.Add(new UICommand("No", new UICommandInvokedHandler((cmd) => result = false)));                 
+                await m.ShowAsync();
+                if (result == true)
+                {
+                    CreateFile(PasswordGenerated.Text);
+                }
+            }
+            else
+            {                
+                ShowMessage("Debe generar un password antes.");
+            }
         }
 
+        #endregion
        
     }
 }
