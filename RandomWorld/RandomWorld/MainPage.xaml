@@ -6,52 +6,108 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="DarkBlue">
+    Background="#000040">
 
     <Grid>
         <Pivot Margin="1,0,-1,0">
-            <PivotItem Header="random">                
+            <PivotItem Header="número">                
                 <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock 
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            Margin="10,0,10,0"
+                            Width="100"
+                        >mínimo:</TextBlock>
+                        <TextBox 
+                            Name="NumberMinimum" 
+                            Text="1"
+                            Width="200"
+                            LostFocus="Number_LostFocus" 
+                            InputScope="Number"
+                            GotFocus="Text_GotFocus"
+                        />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock 
+                            VerticalAlignment="Center"
+                            Margin="10,0,10,0"
+                            FontSize="24"
+                            Width="100"
+                        >máximo:</TextBlock>
+                        <TextBox 
+                            Name="NumberMaximum" 
+                            Text="100"
+                            Width="200"
+                            LostFocus="Number_LostFocus"         
+                            InputScope="Number"
+                            GotFocus="Text_GotFocus"
+                        />
+                    </StackPanel>
                     <TextBlock 
                         FontSize="170"
                         HorizontalAlignment="Center"
-                        Name="DisplayedValue"
+                        Name="DisplayedNumber"
                         >21</TextBlock>
                     <Button 
                         FontSize="30"
                         Height="100"
                         Width="200"
                         HorizontalAlignment="Center"
-                        Margin="0,100"   
-                        Click="Button_Click"
-                        >Random!</Button>
+                        Margin="0,50"   
+                        Click="GetNumber_Click"
+                        >generar</Button>
                 </StackPanel>
             </PivotItem>
-            <PivotItem Header="configuración">
+            <PivotItem Header="letra">
                 <StackPanel>
-                    <RadioButton 
-                        Name="RadioNumber" 
-                        Checked="RadioNumber_Checked"
-                        >Números</RadioButton>
-                    <RadioButton 
-                        Name="RadioLetter"
-                        Checked="RadioLetter_Checked"
-                        >Letras</RadioButton>
-                    
-                    <TextBlock>Valor mínimo:</TextBlock>
-                    <TextBox 
-                        Name="TextMinimum" 
-                        Text="1"
-                        GotFocus="Text_GotFocus"
-                        LostFocus="Text_LostFocus"
-                    />
-                    
-                    <TextBlock>Valor máximo</TextBlock>
-                    <TextBox Name="TextMaximum" 
-                             Text="10" 
-                             GotFocus="Text_GotFocus"
-                             LostFocus="Text_LostFocus"
-                    />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock 
+                            VerticalAlignment="Center"
+                            Margin="10,0,10,0"
+                            Width="100"
+                            FontSize="24"
+                        >mínimo:</TextBlock>
+                        <TextBox 
+                            Name="LetterMinimum" 
+                            Text="A"
+                            Width="200"
+                            GotFocus="Text_GotFocus"
+                            InputScope="AlphanumericHalfWidth"
+                            LostFocus="Letter_LostFocus"
+                            MaxLength="1"
+                        />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock 
+                            VerticalAlignment="Center"
+                            Margin="10,0,10,0"
+                            Width="100"
+                            FontSize="24"
+                        >máximo:</TextBlock>
+                        <TextBox 
+                            Name="LetterMaximum" 
+                            Text="Z"
+                            Width="200"
+                            GotFocus="Text_GotFocus"
+                            LostFocus="Letter_LostFocus"
+                            MaxLength="1"
+                            InputScope="AlphanumericHalfWidth"
+                        />
+                    </StackPanel>
+                    <TextBlock 
+                        FontSize="170"
+                        HorizontalAlignment="Center"
+                        Name="DisplayedLetter"
+                        >R</TextBlock>
+                    <Button 
+                        FontSize="30"
+                        Height="100"
+                        Width="200"
+                        HorizontalAlignment="Center"
+                        Margin="0,50"   
+                        Click="GetLetter_Click"
+                        >generar</Button>
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="volado">
@@ -59,18 +115,82 @@
                     <Image 
                         Name="ImageMoneda" 
                         Width="300px"
-                        Source="ms-appx:/Images/sol.png"/>
+                        Height="300px"/>
                     <Button 
                         Click="Button_Lanzar_Volado_Click"
                         HorizontalAlignment="Center"
                         Margin="30,30,30,30"
-                     >¡Lanzar!</Button>
+                     >¡lanzar!</Button>
                 </StackPanel>
             </PivotItem>
+            <PivotItem Header="password">
+                <StackPanel>
+                    <CheckBox
+                        Name="CheckUpper"
+                        FontSize="24"
+                        >mayúsculas</CheckBox>
+                    <CheckBox
+                        Name="CheckLower"
+                        FontSize="24"
+                        >minúsculas</CheckBox>
+                    <CheckBox
+                        Name="CheckNumber"
+                        FontSize="24"
+                        >números</CheckBox>
+                    <CheckBox
+                        Name="CheckSpecial"
+                        FontSize="24"
+                        >caracteres especiales</CheckBox>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock 
+                            VerticalAlignment="Center"
+                            Margin="10,0,10,0"
+                            Width="80"
+                            FontSize="24"
+                         >tamaño:</TextBlock>
+                        <Slider
+                            Name="PasswordLengthSlider"
+                            Width="200"
+                            Minimum="3"
+                            Maximum="10"
+                            StepFrequency="1"
+                            Height="40"
+                            />
+                        <TextBlock
+                            Name="PasswordLength"
+                            VerticalAlignment="Center"
+                            Margin="30,0"                            
+                            FontSize="24"
+                            >3</TextBlock>
+                    </StackPanel>
+                    <TextBox
+                        Name="PasswordGenerated"
+                        IsEnabled="False"
+                        FontSize="40"
+                        Height="50"
+                        />
+                    <StackPanel 
+                        Margin="30,30,30,30"
+                        Orientation="Horizontal">
+                    <Button 
+                        Click="PasswordButton_Click"
+                        HorizontalAlignment="Center"
+                        Margin="20"
+                     >generar</Button>
+                        <Button
+                            Click="CopyPasswordToClipboard_Click"
+                            >
+                            copiar                            
+                        </Button>
+                    </StackPanel>
+                </StackPanel>                
+            </PivotItem>
             <PivotItem Header="acerca de">
-                <TextBlock>
+                <TextBlock
+                    FontSize="24"
+                    >
                     Random World! <LineBreak/>
-                    Versión 1.1 <LineBreak />
+                    Versión 1.2 <LineBreak />
                     Por Juan Carlos Pérez <LineBreak/>
                     Código fuente disponible en <LineBreak />
                     https://github.com/juniocarl/randomworld

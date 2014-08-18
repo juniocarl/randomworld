@@ -29,7 +29,8 @@ namespace RandomWorld
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Required;
-            RadioNumber.IsChecked = true;
+            PasswordLengthSlider.ValueChanged += PasswordLengthSlider_ValueChanged;
+            InicializarMoneda();
         }
 
         /// <summary>
@@ -48,69 +49,14 @@ namespace RandomWorld
             // this event is handled for you.
         }
 
+
+        #region UTIL 
+
         private string prevInput;
-
-        private void RadioNumber_Checked(object sender, RoutedEventArgs e)
-        {
-            TextMinimum.Text = "1";
-            TextMaximum.Text = "10";
-
-            TextMinimum.MaxLength = 9;
-            TextMaximum.MaxLength = 9;
-        }
-
-        private void RadioLetter_Checked(object sender, RoutedEventArgs e)
-        {
-            TextMinimum.Text = "A";
-            TextMaximum.Text = "Z";
-
-            TextMinimum.MaxLength = 1;
-            TextMaximum.MaxLength = 1;
-        }
 
         private void Text_GotFocus(object sender, RoutedEventArgs e)
         {
             prevInput = (sender as TextBox).Text;
-        }
-
-        private void Text_LostFocus(object sender, RoutedEventArgs e)
-        {
-            string value = (sender as TextBox).Text;
-
-            if(RadioNumber.IsChecked == true)
-            {
-                // Si es numero, validar que sea número
-                try { Int32.Parse(value);  }
-                catch(Exception)
-                {
-                    ShowMessage("El valor ingresado no es numérico.");
-                    (sender as TextBox).Text = prevInput;
-                    return;
-                }
-
-                if (Int32.Parse(TextMinimum.Text) > Int32.Parse(TextMaximum.Text))
-                {
-                    ShowMessage("El valor mínimo debe ser menor o igual al valor máximo.");
-                    (sender as TextBox).Text = prevInput;
-                    return;
-                }
-            }
-            else
-            {
-                if(value.ToUpper()[0] < 'A' || value.ToUpper()[0] > 'Z')
-                {
-                    ShowMessage("El valor ingresado no es una letra.");
-                    (sender as TextBox).Text = prevInput;
-                    return;
-                }
-                if (TextMinimum.Text.ToUpper()[0] > TextMaximum.Text.ToUpper()[0])
-                {
-                    ShowMessage("El valor mínimo debe ser menor o igual al valor máximo.");
-                    (sender as TextBox).Text = prevInput;
-                    return;
-                }
-            }
-
         }
 
         private void ShowMessage(string str)
@@ -119,24 +65,75 @@ namespace RandomWorld
             ms.ShowAsync();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        #endregion 
+
+        #region NUMBER
+
+        private void GetNumber_Click(object sender, RoutedEventArgs e)
+        {
+            System.Random random = new System.Random();
+            string result = result = (random.Next(Int32.Parse(NumberMinimum.Text), Int32.Parse(NumberMaximum.Text) + 1)).ToString();
+            DisplayedNumber.Text = result;
+        }        
+
+        private void Number_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string value = (sender as TextBox).Text;
+            // Si es numero, validar que sea número
+            try { Int32.Parse(value); }
+            catch (Exception)
+            {
+                ShowMessage("El valor ingresado no es numérico.");
+                (sender as TextBox).Text = prevInput;
+                return;
+            }
+
+            if (Int32.Parse(NumberMinimum.Text) > Int32.Parse(NumberMaximum.Text))
+            {
+                ShowMessage("El valor mínimo debe ser menor o igual al valor máximo.");
+                (sender as TextBox).Text = prevInput;
+                return;
+            }
+        }
+
+        #endregion
+
+        #region LETTER
+
+        private void GetLetter_Click(object sender, RoutedEventArgs e)
         {
             System.Random random = new System.Random();
             string result = null;
-            
-            if(RadioNumber.IsChecked == true)
-            {
-                result = (random.Next(Int32.Parse(TextMinimum.Text), Int32.Parse(TextMaximum.Text))).ToString();
-            }
-            else
-            {
-                int min = TextMinimum.Text.ToUpper()[0] - 'A';
-                int max = TextMaximum.Text.ToUpper()[0] - 'A';
-                char c = ((char)(random.Next(min, max) + 'A'));
-                result = c.ToString();
-            }
+            int min = LetterMinimum.Text.ToUpper()[0] - 'A';
+            int max = LetterMaximum.Text.ToUpper()[0] - 'A';
+            char c = ((char)(random.Next(min, max + 1) + 'A'));
+            result = c.ToString();
+            DisplayedLetter.Text = result;
+        }
 
-            DisplayedValue.Text = result;
+        private void Letter_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string value = (sender as TextBox).Text;
+            if (value.ToUpper()[0] < 'A' || value.ToUpper()[0] > 'Z')
+            {
+                ShowMessage("El valor ingresado no es una letra.");
+                (sender as TextBox).Text = prevInput;
+                return;
+            }
+            if (LetterMinimum.Text.ToUpper()[0] > LetterMaximum.Text.ToUpper()[0])
+            {
+                ShowMessage("El valor mínimo debe ser menor o igual al valor máximo.");
+                (sender as TextBox).Text = prevInput;
+                return;
+            }
+        }
+
+        #endregion
+
+        #region VOLADO
+        private void InicializarMoneda()
+        {
+            ImageMoneda.Source = new BitmapImage(new Uri(@"ms-appx:/Images/aguila.png", UriKind.Absolute));
         }
 
         private async void Button_Lanzar_Volado_Click(object sender, RoutedEventArgs e)
@@ -145,7 +142,7 @@ namespace RandomWorld
 
             System.Random random = new System.Random();
             var iteraciones = random.Next(20, 26);
-            string[] nombres = { @"ms-appx:/Images/sol.png", @"ms-appx:/Images/aguila.png" };
+            string[] nombres = { @"ms-appx:/Images/aguila.png", @"ms-appx:/Images/sol.png" };
             var sol = new BitmapImage(
                     new Uri(nombres[0], UriKind.Absolute)
                 );
@@ -156,10 +153,92 @@ namespace RandomWorld
             for (int i = 0; i < iteraciones; i++)
             {
                 ImageMoneda.Source = i % 2 == 0 ? aguila : sol;
-                await Task.Delay(TimeSpan.FromSeconds(i/25.0));
+                await Task.Delay(TimeSpan.FromSeconds(i / 25.0));
             }
 
             (sender as Button).IsEnabled = true;
         }
+
+        #endregion
+
+        #region PASSWORD
+        private void PasswordLengthSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+           try
+           {
+                PasswordLength.Text = PasswordLengthSlider.Value.ToString();
+           }
+           catch (Exception)
+           {
+               PasswordLength.Text = "3";
+           }
+        }
+        
+        private void PasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool Upper = (bool)CheckUpper.IsChecked;
+            bool Lower = (bool)CheckLower.IsChecked;
+            bool Number = (bool)CheckNumber.IsChecked;
+            bool Special = (bool)CheckSpecial.IsChecked;
+
+            if(!Upper && !Lower && !Number && !Special)
+            {
+                ShowMessage("Debe seleccionar al menos una opción");
+                return;
+            }
+
+            System.Random random = new System.Random();
+
+            char[] specialChars = new char[] { '?', '#', '_', '!', '.', '$', '*' };
+
+            string strOptions = "";
+            PasswordGenerated.Text = "";
+
+            if (Upper) strOptions += "U";
+            if (Lower) strOptions += "L";
+            if (Number) strOptions += "N";
+            if (Special) strOptions += "S";            
+
+            for(int i = 0; i < PasswordLengthSlider.Value; i++)
+            {
+                var position = random.Next(0, strOptions.Length);
+
+                if (strOptions[position] == 'U')
+                {
+                    int min = 'A';
+                    int max = 'Z';
+                    char c = ((char)(random.Next(min, max + 1)));
+                    PasswordGenerated.Text += c;
+                }
+                else if (strOptions[position] == 'L')
+                {
+                    int min = 'a';
+                    int max = 'z';
+                    char c = ((char)(random.Next(min, max + 1)));
+                    PasswordGenerated.Text += c;
+                }
+                else if (strOptions[position] == 'N')
+                {
+                    int min = '0';
+                    int max = '9';
+                    char c = ((char)(random.Next(min, max + 1)));
+                    PasswordGenerated.Text += c;
+                }
+                else
+                {
+                    int index = random.Next(0, specialChars.Length);
+                    PasswordGenerated.Text += specialChars[index];
+                }
+            }
+        }
+
+        #endregion
+
+        private void CopyPasswordToClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.ApplicationModel.DataTransfer.Clipboard.SetContent("hello");
+        }
+
+       
     }
 }
